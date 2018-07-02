@@ -11,30 +11,30 @@ HEADERS = {
     'X-Requested-With': 'XMLHttpRequest',
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 '
                   '(KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36',
-    'Referer': "http://www.mmjpg.com"
+    'Referer': "http://www.rosimm8.com"
 }
-
+"""
+图片存储路径
+"""
 DIR_PATH = r"E:\rosimg"
 
-
-def save_pic(pic_src, pic_cnt):
-    """
-    将图片下载到本地文件夹
-    """
+"""
+将图片下载到本地文件夹
+"""
+def save_pic(pic_url, ros_cnt):
     try:
-        img = requests.get(pic_src, headers=HEADERS, timeout=10)
-        img_name = "pic_cnt_{}.jpg".format(pic_cnt)
+        img = requests.get(pic_url, headers=HEADERS, timeout=10)
+        img_name = "ros_cnt{}.jpg".format(ros_cnt)
         with open(img_name, 'ab') as f:
             f.write(img.content)
             print(img_name)
     except Exception as e:
         print(e)
 
-
+"""
+新建套图文件夹并切换到该目录下
+"""
 def make_dir(folder_name):
-    """
-    新建套图文件夹并切换到该目录下
-    """
     path = os.path.join(DIR_PATH, folder_name)
     # 如果目录已经存在就不用再次爬取了，去重，提高效率。存在返回 False，否则反之
     if not os.path.exists(path):
@@ -108,7 +108,7 @@ def main_start(url):
 
 
 if __name__ == "__main__":
-    urls = ['http://www.rosimm8.com/rosimm/{cnt}'.format(cnt=cnt) for cnt in range(0, 2528)]
+    urls = ['http://www.rosimm8.com/rosimm/{cnt}'.format(cnt=cnt) for cnt in range(416, 2528)]
     pool = Pool(processes=cpu_count())
     try:
         delete_empty_dir(DIR_PATH)
